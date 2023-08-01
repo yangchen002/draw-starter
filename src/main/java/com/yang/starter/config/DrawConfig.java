@@ -1,8 +1,12 @@
 package com.yang.starter.config;
 
 import com.yang.starter.properties.BaseDrawProperties;
+import com.yang.starter.service.DrawService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -15,5 +19,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(BaseDrawProperties.class)
 @ConditionalOnProperty(prefix = BaseDrawProperties.PREFIX, name = "enable", havingValue = "true", matchIfMissing = false)
+@AllArgsConstructor
+@Slf4j
 public class DrawConfig {
+
+    private BaseDrawProperties drawProperties;
+
+
+    @Bean
+    public DrawService drawService() {
+
+        return new DrawService(drawProperties);
+    }
 }
